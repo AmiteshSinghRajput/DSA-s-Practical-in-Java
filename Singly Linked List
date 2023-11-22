@@ -1,0 +1,197 @@
+import java.util.Scanner;
+
+/**
+ * SingleLinkedList
+ */
+
+ // create node class for linkedlist
+ class Node{
+    int data;
+    Node next;
+
+    //constructor
+    Node(int data){
+        this.data=data;
+        this.next=null;
+    }
+ }
+
+//  Singly linked list class
+class LinkedList{
+    Node head;
+
+    //constructor
+    public LinkedList(){
+        this.head=null;
+    }
+
+    // Insertion at the beginning of the list
+    public void insertAtBeginning(int data){
+        Node newNode= new Node(data);
+        newNode.next=head;
+        head=newNode;
+    }
+
+    // Insertion at the end of the list
+    public void insertAtEnd(int data){
+        Node newNode= new Node(data);
+
+        if(head == null){
+            head = newNode;
+            return;
+        }
+
+        Node current=head;
+        while(current.next!=null){
+            current=current.next;
+        }
+
+        current.next=newNode;
+    }
+
+    //Insertion after a node with a specific data value
+    public void insertAfterData(int data, int dataToFind){
+        Node newNode= new Node(data);
+        Node current=head;
+        while(current!=null){
+            if(current.data==dataToFind){
+                newNode.next=current.next;
+                current.next=newNode;
+                return;
+            }
+            current=current.next;
+        }
+        System.out.println("Data"+dataToFind+" not found in the list. Insertion failed.");
+    }
+
+    //Deletion at the beginning of the list 
+    public void deleteAtbeginning(){
+        if(head==null){
+            System.out.println("List is empty.Nothing to Delete");
+            return;
+        }
+        Node temp =head;
+        head=head.next;
+        temp=null;
+    }
+
+    //Delete by data value
+    public void deleteByData(int dataToFind){
+        Node current=head;
+        Node prev = null;
+        while(current!=null){
+            if(current.data==dataToFind){
+                if(prev == null){
+                    head=current.next;
+                }else{
+                prev.next=current.next;
+                }
+                current=null;
+                return;
+            }
+            prev=current;
+            current=current.next;
+        }
+        System.out.println("Data "+ dataToFind +" not found!!");
+    }
+
+    //Deletion At the end of list
+    public void deleteAtEnd(){
+         if (head == null) {
+            System.out.println("List is empty. Nothing to delete.");
+            return;
+        }
+
+        if (head.next == null) {
+            head = null;
+            return;
+        }
+
+        Node current = head;
+        Node prev = null;
+        while(current.next!=null){
+            prev=current;
+            current=current.next;
+        }
+        prev.next=null;
+        current= null;
+
+    }
+
+    // Display Single Linked list
+    public void display(){
+        if(head==null){
+            System.out.println("Nothing to display");
+            return;
+        }
+
+        Node current= head;
+        while(current!=null){
+            System.out.print(current.data+"->");
+            current=current.next;
+        }
+        System.out.println("Null");
+    }
+}
+
+// Start main function
+public class SingleLinkedList {
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    LinkedList sll = new LinkedList();
+    int choice,dataToFind,data;
+
+    while(true){
+        System.out.println("1. Insert in Singly Linked List");
+        System.out.println("2. Delete in Singly Linked List");
+        System.out.println("3. Display Singly Linked List");
+        System.out.println("4. Exit");
+        System.out.println("Enter a choice");
+        choice= sc.nextInt();
+        
+        switch (choice) {
+            case 1:
+                System.out.println("1.Insert At Begining ");
+                System.out.println("2.Insert After a value ");
+                System.out.println("3.Insert At End ");
+                choice=sc.nextInt();
+                switch (choice) {
+                    case 1-> {System.out.println("Enter data to insert");data=sc.nextInt();sll.insertAtBeginning(data);}
+                    case 2-> {System.out.println("Enter data to insert");data=sc.nextInt();
+                              System.out.println("Enter data after to insert");dataToFind=sc.nextInt();
+                              sll.insertAfterData(data, dataToFind);}
+                    case 3-> {System.out.println("Enter data to insert at End");
+                                data=sc.nextInt();sll.insertAtEnd(data);}
+
+                    default-> System.out.println("Invalid Input. ");
+                    
+                }
+                
+
+                break;
+            case 2:
+                System.out.println("1.Delete At Begining ");
+                System.out.println("2.Delete a value ");
+                System.out.println("3.Delete At End ");
+                choice=sc.nextInt();
+                switch (choice) {
+                    case 1-> sll.deleteAtbeginning();
+                    case 2-> {System.out.println("Enter data to delete");dataToFind=sc.nextInt();sll.deleteByData(dataToFind);}
+                    case 3-> sll.deleteAtEnd();
+                    default-> System.out.println("Invalid Input. ");
+                    
+                }
+                break;
+            case 3:
+                sll.display();
+             break;
+            case 4: System.exit(0);
+            default: System.out.println("Invalid Input.Please Try Again ");
+                break;
+        }
+
+    }
+    
+}
+    
+}
